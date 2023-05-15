@@ -1,8 +1,9 @@
 import pygame
 import sys
+import os
 from random import randint
 from PIL import Image
-
+# from sys import exit as quit
 
 WIDTH = 840
 HEIGHT = 650
@@ -19,8 +20,35 @@ display = pygame.display.set_mode((WIDTH, HEIGHT)) # переменная под
 pygame.display.set_caption("My Game") # название окна
 clock = pygame.time.Clock() # как часто будет обновлятся цикл(fps)
 
+resource_name1 = 'фон.mp3'
+resource_name2 = 'проиграл.wav'
+resource_name3 = 'car_player0.png'
+resource_name4 = 'car_player1.png'
+resource_name5 = 'car_player2.png'
+resource_name6 = 'car0.png'
+resource_name7 = 'car1.png'
+resource_name8 = 'car2.png'
+resource_name9 = 'doroga.png'
+resource_name10 = 'doroga2.png'
+resource_name11= 'text.otf'
+resource_name12 = 'фон.png'
+
+resource_path1 = os.path.join(sys._MEIPASS, resource_name1) if hasattr(sys, '_MEIPASS') else resource_name1
+resource_path2 = os.path.join(sys._MEIPASS, resource_name2) if hasattr(sys, '_MEIPASS') else resource_name2
+resource_path3 = os.path.join(sys._MEIPASS, resource_name3) if hasattr(sys, '_MEIPASS') else resource_name3
+resource_path4 = os.path.join(sys._MEIPASS, resource_name4) if hasattr(sys, '_MEIPASS') else resource_name4
+resource_path5 = os.path.join(sys._MEIPASS, resource_name5) if hasattr(sys, '_MEIPASS') else resource_name5
+resource_path6 = os.path.join(sys._MEIPASS, resource_name6) if hasattr(sys, '_MEIPASS') else resource_name6
+resource_path7 = os.path.join(sys._MEIPASS, resource_name7) if hasattr(sys, '_MEIPASS') else resource_name7
+resource_path8 = os.path.join(sys._MEIPASS, resource_name8) if hasattr(sys, '_MEIPASS') else resource_name8
+resource_path9 = os.path.join(sys._MEIPASS, resource_name9) if hasattr(sys, '_MEIPASS') else resource_name9
+resource_path10 = os.path.join(sys._MEIPASS, resource_name10) if hasattr(sys, '_MEIPASS') else resource_name10
+resource_path11 = os.path.join(sys._MEIPASS, resource_name11) if hasattr(sys, '_MEIPASS') else resource_name11
+resource_path12 = os.path.join(sys._MEIPASS, resource_name12) if hasattr(sys, '_MEIPASS') else resource_name12
+
+
 # Музыка
-pygame.mixer.music.load("фон.mp3") # только для mp3
+pygame.mixer.music.load(resource_path1) # только для mp3
 pygame.mixer.music.set_volume(0.1)
 # pygame.mixer.music.load("C:/Users/user/Desktop/Game/проиграл.mp3")
 # pygame.mixer.music.set_volume()  Громкость
@@ -28,7 +56,7 @@ pygame.mixer.music.set_volume(0.1)
 # pygame.mixer.music.pause() поставить музыку на паузу
 # pygame.mixer.music.unpause() выйти из  паузы
 # pygame.mixer.music.stop() остановить музыку
-game_over_sound = pygame.mixer.Sound("проиграл.wav") # если хотим  музыку в переменной только для wav
+game_over_sound = pygame.mixer.Sound(resource_path2) # если хотим  музыку в переменной только для wav
 pygame.mixer.Sound.set_volume(game_over_sound, 0.1) # Громкость конкретного звука 
 # pygame.time.delay(мл/с) временная задержка / не музыки
 # pygame.mixer.Sound.play чтобы проиграть музыку
@@ -40,7 +68,7 @@ usr_height = 80 # ДЛИНА
 usr_x = WIDTH / 2 - 80 # ЕГО х ПОЗИЦИЯ
 usr_y = HEIGHT - usr_height - 100 # ЕГО y ПОЗИЦИЯ
 
-player_img = [pygame.image.load("car_player0.png"),pygame.image.load("car_player1.png"),pygame.image.load("car_player2.png")]
+player_img = [pygame.image.load(resource_path3),pygame.image.load(resource_path4),pygame.image.load(resource_path5)]
 choise = randint(0,2)
 
 def draw_player():
@@ -73,7 +101,7 @@ def down():
     usr_y += 4
 
 # создаем машину
-car_img=[pygame.image.load("car0.png"),pygame.image.load("car1.png"),pygame.image.load("car2.png")] 
+car_img=[pygame.image.load(resource_path6),pygame.image.load(resource_path7),pygame.image.load(resource_path8)] 
 
 # Класс машин
 class Object:
@@ -155,8 +183,8 @@ def draw_array(array):
 
             car.return_self(x,y,img)
 # дорога
-doroga_img = pygame.image.load("doroga.png")
-doroga_img2 = pygame.image.load("doroga2.png")
+doroga_img = pygame.image.load(resource_path9)
+doroga_img2 = pygame.image.load(resource_path10)
 y = 0
 y2 = - HEIGHT
 def doroga():
@@ -173,7 +201,7 @@ def doroga():
         y2 = -HEIGHT
 
 # Пишем текст на экране
-def print_text (message,x,y, font_color = (255, 255, 255), font_type = 'text.otf',font_size = 30):
+def print_text (message,x,y, font_color = (255, 255, 255), font_type = resource_path11,font_size = 30):
     font_type = pygame.font.Font(font_type,font_size)
     text = font_type.render(message,True,font_color)
     display.blit(text,(x,y))
@@ -274,7 +302,7 @@ def check_collision2(barriers):
                     return True
 
 # Игровое меню
-menu_bc = pygame.image.load("фон.png")
+menu_bc = pygame.image.load(resource_path12)
 def show_menu():
     global menu_bc
     start_btn = Button(320,70)
@@ -288,7 +316,7 @@ def show_menu():
 
         display.blit(menu_bc,(0,0))
         start_btn.draw(20,400,"Начать игру!",start_game,50)
-        quit_btn.draw(20,500,"Выйти из игры.",quit,50)
+        quit_btn.draw(20,500,"Выйти из игры.",quit_game,50)
         pygame.display.update()
         clock.tick(60)
 
@@ -358,15 +386,18 @@ class Button:
             pygame.draw.rect(display,self.active_clr,(x,y,self.width,self.height))
 
             if click[0] == 1 and action is not None: # (0) левая кнопка мыши (1) нажата 
-                if action == quit:
-                    pygame.QUIT()
-                    sys.exit()
+                if action == quit_game:
+                    quit_game()
                 else:
                     action()
         else:
             pygame.draw.rect(display,self.inactive_clr,(x,y,self.width,self.height))
         print_text(message = message, x = x + 5 , y = y + 10, font_size = font_size)
 
+def quit_game():
+    pygame.quit()
+    sys.exit()
+
 show_menu()
-pygame.QUIT()
+pygame.quit()
 sys.exit()
